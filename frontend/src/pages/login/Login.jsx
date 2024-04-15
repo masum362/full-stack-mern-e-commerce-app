@@ -2,6 +2,7 @@ import { useState } from 'react';
 import loginIcon from '../../assets/signin.gif'
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useForm } from 'react-hook-form'
+import { Link } from 'react-router-dom';
 
 const Login = () => {
 
@@ -54,7 +55,7 @@ const Login = () => {
             <button type='submit' className='bg-red-600 text-white rounded-full w-full h-full font-bold hover:bg-red-900  transition-all duration-300'>Login</button>
           </div>
           <div>
-            <p>Does have an account? <a href="#"><span className='text-red-600'>Sign up</span></a></p>
+            <p>Doesn't have an account? <Link to="/register"><span className='text-red-600'>Register</span></Link></p>
           </div>
         </form>
       </div>
