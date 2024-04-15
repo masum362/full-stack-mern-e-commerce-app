@@ -1,11 +1,12 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import loginIcon from '../../assets/signin.gif'
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom';
 
 import axios from 'axios';
-import { commonFileApi } from '../../utils/api';
+import { commonFileApi, commonPostApi } from '../../utils/api';
+import { AuthContext } from '../../context/AuthProvider';
 
 
 const Register = () => {
@@ -16,14 +17,24 @@ const Register = () => {
     })
     const [image, setImage] = useState("")
     const [loading, setLoading] = useState(false)
-
+    const { registerUser, updateUser } = useContext(AuthContext)
 
 
     const { handleSubmit, register, reset, getValues, formState: { errors } } = useForm();
 
     const onFormSubmit = data => {
         data.image = image;
-        console.log(data);
+        registerUser(data.email, data.password).then(res => {
+            updateUser(res.user, data.name, data.image).then(() => {
+                const user = res.user;
+                commonPostApi({
+                    name: user.displayName,
+                    email: user.email,
+                    photoURL: user.photoURL,
+                    uid: user.uid
+                }).then(res => console.log(res)).catch(err => console.log(err));
+            }).catch(err => console.log(err));
+        }).catch(err => console.log(err));
         reset();
     }
 

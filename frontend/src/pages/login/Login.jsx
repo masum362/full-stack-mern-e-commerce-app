@@ -1,17 +1,19 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import loginIcon from '../../assets/signin.gif'
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../context/AuthProvider';
 
 const Login = () => {
 
   const [isPassword, setIsPassword] = useState(true);
+  const { loginUser } = useContext(AuthContext)
 
   const { handleSubmit, register, reset, formState: { errors } } = useForm();
 
   const onFormSubmit = data => {
-    console.log(data);
+    loginUser(data.email, data.password).then(res => console.log(res.user)).catch(err => console.log(err));
     reset();
   }
 

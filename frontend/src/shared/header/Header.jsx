@@ -2,12 +2,21 @@ import Logo from '../../components/Logo/Logo'
 import { MdSearch } from "react-icons/md";
 import { FaShoppingCart, FaRegUserCircle } from "react-icons/fa";
 import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+import { AuthContext } from '../../context/AuthProvider';
 
 const Header = () => {
+  const { user, logoutUser } = useContext(AuthContext)
+
+  const handleLogOut = () => {
+    logoutUser().then(() => console.log("user logged out")).catch(err => console.log(err))
+  }
+
+
   return (
     <div className='flex items-center justify-between px-4 gap-4 shadow-lg w-full bg-white' >
       <div>
-        <Logo w={100} h={60} />
+        <Link to={"/"}><Logo w={100} h={60} /></Link>
 
       </div>
 
@@ -23,10 +32,12 @@ const Header = () => {
           </div>
           <span className="badge badge-sm indicator-item bg-red-600 text-white">8</span>
         </div>
-        <div className='text-2xl'>
-          <FaRegUserCircle />
+        <div className='text-2xl skeleton cursor-pointer'>
+          {user?.photoURL ? <img src={user.photoURL} alt="user-profilePic" className='w-10 rounded-full border-red-600 border' /> : <FaRegUserCircle />}
         </div>
-        <Link to={"/login"}><button className='bg-red-600 hover:bg-red-900 text-white w-20 h-8 rounded-full border-none font-bold'>Login</button></Link>
+        {
+          user ? <Link to={"/login"}><button onClick={handleLogOut} className='bg-red-600 hover:bg-red-900 text-white w-20 h-8 rounded-full border-none font-bold'>Logout</button></Link> : <Link to={"/login"}><button className='bg-red-600 hover:bg-red-900 text-white w-20 h-8 rounded-full border-none font-bold'>Login</button></Link>
+        }
       </div>
 
     </div>
