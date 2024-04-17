@@ -41,7 +41,7 @@ const commonGetApi = async (url) => {
   }
 };
 const commonPutApi = async (url, data) => {
-  const response = await axios.post(
+  const response = await axios.put(
     `${import.meta.env.VITE_BACKEND_URL}/${url}`,
     data,
     { withCreadentials: true }
@@ -54,4 +54,24 @@ const commonPutApi = async (url, data) => {
   }
 };
 
-export { commonFileApi, commonPostApi, commonGetApi, commonPutApi };
+const commonDeleteApi = async (url, id) => {
+  const response = await axios.delete(
+    `${import.meta.env.VITE_BACKEND_URL}/${url}`,
+    id,
+    { withCreadentials: true }
+  );
+
+  try {
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export {
+  commonFileApi,
+  commonPostApi,
+  commonGetApi,
+  commonPutApi,
+  commonDeleteApi,
+};
