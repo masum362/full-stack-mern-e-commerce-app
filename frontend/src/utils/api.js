@@ -28,5 +28,30 @@ const commonPostApi = async (data) => {
     console.log(error);
   }
 };
+const commonGetApi = async (url) => {
+  const response = await axios.get(
+    `${import.meta.env.VITE_BACKEND_URL}/${url}`,
+    { withCreadentials: true }
+  );
 
-export { commonFileApi, commonPostApi };
+  try {
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+const commonPutApi = async (url, data) => {
+  const response = await axios.post(
+    `${import.meta.env.VITE_BACKEND_URL}/${url}`,
+    data,
+    { withCreadentials: true }
+  );
+
+  try {
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export { commonFileApi, commonPostApi, commonGetApi, commonPutApi };
