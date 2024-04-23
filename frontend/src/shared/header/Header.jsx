@@ -7,6 +7,7 @@ import { AuthContext } from '../../context/AuthProvider';
 
 const Header = () => {
   const { user, logoutUser } = useContext(AuthContext)
+  console.log(user)
 
   const handleLogOut = () => {
     logoutUser().then(() => console.log("user logged out")).catch(err => console.log(err))
@@ -32,8 +33,13 @@ const Header = () => {
           </div>
           <span className="badge badge-sm indicator-item bg-red-600 text-white">8</span>
         </div>
-        <div className='text-2xl skeleton cursor-pointer'>
-          {user?.photoURL ? <img src={user.photoURL} alt="user-profilePic" className='w-10 rounded-full border-red-600 border' /> : <FaRegUserCircle />}
+
+        <div tabIndex={0} className='dropdown dropdown-end text-2xl menu  cursor-pointer'>
+          {user ? <img src={user.photoURL} alt="user-profilePic" className='w-10 rounded-full border-red-600 border' /> : <FaRegUserCircle />}
+
+          <ul tabIndex={0} className="menu absolute top-11 right-0 bg-base-200 dropdown-content w-56 rounded-box">
+            <Link to={"/admin-panel"}>Admin Panel</Link>
+          </ul>
         </div>
         {
           user ? <Link to={"/login"}><button onClick={handleLogOut} className='bg-red-600 hover:bg-red-900 text-white w-20 h-8 rounded-full border-none font-bold'>Logout</button></Link> : <Link to={"/login"}><button className='bg-red-600 hover:bg-red-900 text-white w-20 h-8 rounded-full border-none font-bold'>Login</button></Link>
